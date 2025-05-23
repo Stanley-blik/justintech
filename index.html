@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News 254Ke</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #0a3d62;
+      color: #fff;
+      padding: 15px 0;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    main {
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    .breaking-news h2,
+    .latest-posts h2 {
+      background: #079992;
+      color: #fff;
+      padding: 10px;
+      margin: 0;
+    }
+
+    #ticker {
+      background: #dff9fb;
+      padding: 10px;
+      font-style: italic;
+      border-left: 5px solid #079992;
+      margin-top: 5px;
+    }
+    .post {
+     background: #fff;
+     padding: 15px;
+     border-radius: 8px;
+     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+ 
+   }
+
+   .post h3 {
+   margin-top: 0;
+   color: #0a3d62;
+   }
+
+   .post p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+    .posts-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    footer {
+      text-align: center;
+      background: #0a3d62;
+      color: #fff;
+      padding: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>News 254Ke</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Categories</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="admin.html">Admin</a> <!-- Link to admin panel -->
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="breaking-news">
+      <h2>Live Updates</h2>
+      <div id="ticker">
+        <!-- JS will inject live headlines here -->
+      </div>
+    </section>
+
+    <section class="latest-posts">
+      <h2>Latest News</h2>
+      <div class="posts-container">
+      
+        <!-- Posts will go here -->
+        <section class="latest-posts">
+  <h2>Latest News</h2>
+  <div class="posts-container">
+    <div class="post">
+      <h3>Tech Ninjas launch another project</h3>
+      <p>
+Get ready! The Tech Ninjas development team has just announced the launch of an exciting new project. Details are still under wraps, but anticipation is high for what these innovative developers will bring next. Stay tuned for more updates!.</p>
+    </div>
+    <div class="post">
+      <h3> CEO Justin to Launch NEWS254KE Web This Week</h3>
+      <p>Kenyans– Get ready for a new voice in Kenyan news! CEO Justin is set to officially launch NEWS254KE Web later this week, promising to bring fresh perspectives and timely updates to the digital landscape..
+Stay tuned for more updates as NEWS254KE Web goes live!</p>
+    </div>
+  </div>
+</section>
+        
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 News 254Ke</p>
+  </footer>
+  
+  
+  <script>
+    const ticker = document.getElementById('ticker');
+
+    const headlines = [
+      "Breaking: Government announces new economic policy.",
+      "Sports: Kenya wins gold in marathon.",
+      "Weather Alert: Heavy rains expected this weekend.",
+      "Tech: New AI startup launches in Nairobi.",
+      "Health: Tips for mental wellness this season."
+    ];
+
+    let index = 0;
+
+    function updateTicker() {
+      ticker.textContent = headlines[index];
+      index = (index + 1) % headlines.length;
+    }
+
+    updateTicker();
+    setInterval(updateTicker, 4000); // updates every 4 seconds
+    
+  
+  const postsContainer = document.querySelector('.posts-container');
+  const savedPosts = JSON.parse(localStorage.getItem('newsPosts')) || [];
+
+  savedPosts.forEach(post => {
+    const postEl = document.createElement('div');
+    postEl.className = 'post';
+    postEl.innerHTML = `<h3>post.title</h3><p>{post.content}</p><small>${post.time}</small>`;
+    postsContainer.appendChild(postEl);
+  });
+  </script>
+  
+  
+
+
+
+</body>
+</html>
