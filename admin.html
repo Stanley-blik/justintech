@@ -151,6 +151,19 @@
   // store post...
 }
 
+import { ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+// Example base64 string
+const base64String = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUg...";
+
+// Create a reference in Firebase Storage
+const storageRef = ref(storage, 'images/my-image.png');
+
+// Upload as base64
+await uploadString(storageRef, base64String, 'data_url');
+
+// Get download URL
+const imageUrl = await getDownloadURL(storageRef);
 
 
 
