@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,10 +18,20 @@
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: center;
     }
 
     h2 {
       color: #0a3d62;
+    
+    }
+    h1{
+        color: red;
+        text-align: center;
+        
+    }
+    h1:hover{
+        color: black;
     }
 
     label, textarea, input {
@@ -46,16 +55,65 @@
       cursor: pointer;
     }
   </style>
+  
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDWkkPVTeozgZLqzXto1szlKS5z70ieIkE",
+    authDomain: "news254-dabde.firebaseapp.com",
+    projectId: "news254-dabde",
+    storageBucket: "news254-dabde.appspot.com",
+    messagingSenderId: "996376674221",
+    appId: "1:996376674221:web:09b2d4189172bee9e5ab24"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  window.firebaseApp = { db, storage, serverTimestamp };
+  
+ document.getElementById('postForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const title = document.getElementById('title').value;
+  const content = document.getElementById('content').value;
+  const file = document.getElementById('image').files[0];
+
+  let imageUrl = null;
+
+  if (file) {
+    const storageRef = ref(firebaseApp.storage, 'images/' + file.name);
+    await uploadBytes(storageRef, file);
+    imageUrl = await getDownloadURL(storageRef);
+  }
+
+  await addDoc(collection(firebaseApp.db, "posts"), {
+    title,
+    content,
+    image: imageUrl,
+    time: firebaseApp.serverTimestamp()
+  });
+
+  alert("Post published!");
+  this.reset();
+});
+</script>
 </head>
 <body>
   <div class="admin-container">
-    <h2>Post a New Article</h2>
+     <h1>NEWS|254|KE</h1>     <h2>Post a New Article</h2>
     <form id="postForm">
       <label for="title">Title</label>
       <input type="text" id="title" required>
 
       <label for="content">Content</label>
       <textarea id="content" rows="5" required></textarea>
+      <label for="image">Image(optional)</label>
+<input type="file" id="image" accept="image/*">
 
       <button type="submit">Publish</button>
     </form>
@@ -71,11 +129,7 @@
       alert("Post published (simulated)");
       this.reset();
     });
-    
-    
-    
-    
-   l
+        
   document.getElementById('postForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const title = document.getElementById('title').value;
@@ -90,9 +144,20 @@
     alert("Post published!");
     this.reset();
   });
+  if (imageInput.files[0]) {
+  reader.readAsDataURL(imageInput.files[0]);
+} else {
+  const newPost = { title, content, image: null, time: new Date().toLocaleString() };
+  // store post...
+}
+
+
+
+
+
 
   </script>
   
   <p><a href="index.html" style="color:#0a3d62;">← Back to Homepage</a></p>
 </body>
-</html>  
+</html>
